@@ -83,15 +83,19 @@ class EpicApiClient(context: Context) {
                 .build()
 
             val response = client.newCall(request).execute()
-            val body = response.body.string()
+            val body = response.body?.string()
 
-            if (!response.isSuccessful) {
+            if (!response.isSuccessful || body == null) {
                 Log.e(TAG, "Auth failed: ${response.code} - $body")
-                val errorMsg = try {
-                    val errorJson = Json.parseToJsonElement(body).jsonObject
-                    errorJson["error_description"]?.toString()?.removeSurrounding("\"") ?: "Unknown error"
-                } catch (_: Exception) {
-                    "Authentication failed (${response.code})"
+                val errorMsg = if (body != null) {
+                    try {
+                        val errorJson = Json.parseToJsonElement(body).jsonObject
+                        errorJson["error_description"]?.toString()?.removeSurrounding("\"") ?: "Unknown error"
+                    } catch (_: Exception) {
+                        "Authentication failed (${response.code})"
+                    }
+                } else {
+                    "Authentication failed (${response.code}) - empty response body"
                 }
                 return@withContext AuthResult.Error(errorMsg)
             }
@@ -131,9 +135,9 @@ class EpicApiClient(context: Context) {
                 .build()
 
             val response = client.newCall(request).execute()
-            val body = response.body.string()
+            val body = response.body?.string()
 
-            if (response.isSuccessful) {
+            if (response.isSuccessful && body != null) {
                 val authData = json.decodeFromString<UserData>(body)
                 userData = authData
                 accessToken = authData.access_token
@@ -145,7 +149,7 @@ class EpicApiClient(context: Context) {
                 Log.d(TAG, "Token refreshed successfully")
                 true
             } else {
-                Log.e(TAG, "Token refresh failed: ${response.code}")
+                Log.e(TAG, "Token refresh failed: ${response.code} - $body")
                 false
             }
         } catch (e: Exception) {
@@ -173,11 +177,4 @@ class EpicApiClient(context: Context) {
     fun isLoggedIn(): Boolean = userData != null && accessToken != null
     fun getDisplayName(): String? = userData?.displayName
     fun getAccessToken(): String? = accessToken
-
-    fun logout() {
-        prefs.edit { clear() }
-        userData = null
-        accessToken = null
-        Log.d(TAG, "User logged out")
-    }
 }

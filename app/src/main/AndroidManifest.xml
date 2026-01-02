@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.franklinprakash.epiclibraryviewer">
 
-    <!-- Required permissions -->
+    <!-- Network permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -15,33 +15,27 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Material3.Light"
+        android:theme="@style/Theme.EpicLibraryViewer"
         android:usesCleartextTraffic="false"
         tools:targetApi="31">
 
+        <!-- Main launcher -->
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            android:launchMode="singleTask">
+            android:exported="true">
 
-            <!-- Launch from app drawer -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <!-- Deep link for OAuth callback -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:scheme="epicgames"
-                    android:host="callback" />
-            </intent-filter>
-
         </activity>
+
+        <!-- Epic OAuth WebView -->
+        <activity
+            android:name=".EpicLoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.EpicLibraryViewer.NoActionBar" />
 
     </application>
 
