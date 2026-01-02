@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Epic Library Viewer</string>
+    <string name="library_loaded">Library loaded: %1$d games</string>
+    <string name="cached_library">Cached library (%1$d games) • Updated %2$s</string>
+    <string name="error_loading_library">Error loading library</string>
+    <string name="no_games_found">No games found in your library</string>
+    <string name="logged_in_as">Logged in as %1$s</string>
+    <string name="please_log_in">Please log in to view your library</string>
+    <string name="logging_in">Logging in with Epic Games...</string>
+    <string name="initializing">Initializing...</string>
+    <string name="authenticating">Authenticating...</string>
+    <string name="refreshing_library">Refreshing library...</string>
+    <string name="loading_library">Loading library...</string>
+    <string name="login_cancelled_or_failed">Login cancelled or failed: %1$s</string>
+    <string name="invalid_response">Invalid response from Epic Games</string>
+    <string name="welcome_user">Welcome, %1$s!</string>
+    <string name="login_failed">Login failed: %1$s</string>
+    <string name="showing_cached_data">Showing cached data</string>
+    <string name="failed_to_load_library">Failed to load library: %1$s</string>
+    <string name="time_ago_just_now">just now</string>
+    <string name="time_ago_minutes">%1$d min ago</string>
+
+    <plurals name="time_ago_hours">
+        <item quantity="one">1 hour ago</item>
+        <item quantity="other">%d hours ago</item>
+    </plurals>
+
+    <plurals name="time_ago_days">
+        <item quantity="one">1 day ago</item>
+        <item quantity="other">%d days ago</item>
+    </plurals>
+</resources>
